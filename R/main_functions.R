@@ -69,6 +69,7 @@
 #' }
 #'
 findDE <- function(object,
+                   assay = "RNA"
                    meta_data = NULL,
                    group_column = NULL,
                    replicate_column = NULL,
@@ -79,7 +80,7 @@ findDE <- function(object,
                    lfc_shrinkage = NULL,
                    verbosity = 1) {
   # extract the data from the input object
-  de_data <- get_data(object, meta_data, group_column, replicate_column, verbosity)
+  de_data <- get_data(object, meta_data, group_column, replicate_column, verbosity, assay)
   # set up the comparisons
   group_levels = levels(x = de_data$grouping)
   comparisons <- set_up_comparisons(group_levels = group_levels, compare = compare,

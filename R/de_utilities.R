@@ -192,17 +192,25 @@ print_comparisons <- function(comparisons, verbosity) {
 }
 
 # function to extract the count matrix and grouping factor from input
-get_data <- function(object, meta_data, group_column, replicate_column, verbosity) {
+get_data <- function(object, meta_data, group_column, replicate_column, verbosity, assay) {
   replicate_label <- NULL
 
   if (inherits(x = object, what = 'Seurat')) {
-    if (!('RNA' %in% SeuratObject::Assays(object))) {
-      stop('Did not find "RNA" assay in Seurat object')
+    if (!('RNA' %in% SeuratObject::Assays(object)) & !('SCT' %in% SeuratObject::Assays(object))) {
+      stop('Did not find "RNA"/"SCT" assay in Seurat object')
     }
     if (!is.null(meta_data) & verbosity > 0) {
       message('input is Seurat object - the meta_data argument will be ignored')
     }
+    
+    if (assay == "RNA"){
     counts <- SeuratObject::GetAssayData(object[["RNA"]], slot = "counts")
+    message('Getting counts from "RNA" assay')
+    } else {
+    counts <- SeuratObject::GetAssayData(object[["SCT"]], slot = "counts")
+    message('Getting counts from "SCT" assay')
+    }
+    
     meta_data <- object[[]]
     if (is.null(group_column)) {
       if (verbosity > 0) {
