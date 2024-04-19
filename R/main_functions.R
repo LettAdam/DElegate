@@ -138,7 +138,8 @@ FindAllMarkers2 <- function(object,
                             min_rate = 0.05,
                             min_fc = 1,
                             lfc_shrinkage = NULL,
-                            verbosity = 1) {
+                            verbosity = 1,
+                            assay = "RNA") {
   res <- findDE(object = object,
                 meta_data = meta_data,
                 group_column = group_column,
@@ -147,7 +148,8 @@ FindAllMarkers2 <- function(object,
                 method = method,
                 order_results = TRUE,
                 lfc_shrinkage = lfc_shrinkage,
-                verbosity = verbosity)
+                verbosity = verbosity,
+                assay = assay)
 
     res <- dplyr::filter(res, .data$rate1 >= min_rate | .data$rate2 >= min_rate, .data$log_fc >= min_fc) %>%
       dplyr::group_by(.data$group1) %>%
