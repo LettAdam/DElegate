@@ -69,7 +69,7 @@
 #' }
 #'
 findDE <- function(object,
-                   assay = "RNA"
+                   assay = "RNA",
                    meta_data = NULL,
                    group_column = NULL,
                    replicate_column = NULL,
